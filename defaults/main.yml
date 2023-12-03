@@ -1,0 +1,26 @@
+---
+# the user and server used to store the backups
+# example user@some.host.com
+borg_repo_server: ""
+
+# the path on the remote server where the backups are stored
+borg_repo_path: "borg/{{ ansible_hostname }}"
+
+# passphrase for the remote repo
+borg_passphrase: ""
+
+# path to remote borg binary
+borg_remote_bin_path: ""
+
+# directories to backup
+borg_directories: []
+
+# specific user to run backups as
+borg_user: root
+
+# backups to retain
+borg_retain_days: 14
+borg_retain_weeks: 4
+borg_retain_months: 12
+borg_retain_years: 3
+

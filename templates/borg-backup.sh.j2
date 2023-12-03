@@ -1,0 +1,20 @@
+#!/bin/bash
+# Backup a folder to a remote address using borg.
+# Usage: backup-borg.sh
+# To restore: borg extract $BORG_REPO::computer-and-date
+
+set -eu
+
+export BORG_REPO='{{ borg_repo_server }}:{{ borg_repo_path }}'
+export BORG_PASSPHRASE='{{ borg_passphrase }}'
+{% if borg_remote_path %}
+export BORG_REMOTE_PATH='{{ borg_remote_path }}'
+{% endif %}
+
+sudo -E -u {{ borg_user }} borg create ::$(hostname)-$(date -I) {{ borg_directories | join(' ') }}
+sudo -E -u {{ borg_user }} borg prune \
+    --keep-daily={{ borg_retain_days }} \
+    --keep-weekly={{ borg_retain_weeks }} \
+    --keep-monthly={{ borg_retain_months }} \
+    --keep-yearly={{ borg_retain_years }}
+

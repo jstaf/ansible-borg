@@ -1,0 +1,5 @@
+galaxy_info:
+  author: Jeff Stafford
+  description: Sets up borg backup for workstations
+  license: GPL-3.0
+

@@ -1,0 +1,29 @@
+---
+# tasks file for jstaf.borg
+- name: Install borg
+  package:
+    name:
+      - borgbackup
+      - cronie
+
+- name: Ensure cron is running
+  service:
+    name: cron
+    state: started
+    enabled: yes
+
+- name: Validate borg credentials
+  command: borg list
+  become_user: "{{ borg_user }}"
+  environment:
+    BORG_REPO: "{{ borg_repo_server }}:{{ borg_repo_path }}"
+    BORG_PASSPHRASE: "{{ borg_passphrase }}"
+    BORG_REMOTE_PATH: "{{ borg_remote_path | default(omit) }}"
+
+- name: Template backup script
+  template:
+    src: borg-backup.sh.j2
+    dest: /etc/cron.daily/borg-backup
+    owner: root
+    mode: 0700
+
