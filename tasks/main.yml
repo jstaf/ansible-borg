@@ -1,14 +1,11 @@
 ---
-# tasks file for jstaf.borg
 - name: Install borg
   package:
-    name:
-      - borgbackup
-      - cronie
+    name: "{{ borg_packages }}"
 
 - name: Ensure cron is running
   service:
-    name: cron
+    name: "{{ borg_cron_service }}"
     state: started
     enabled: yes
 

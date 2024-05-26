@@ -24,3 +24,10 @@ borg_retain_weeks: 4
 borg_retain_months: 12
 borg_retain_years: 3
 
+# distribution-specific stuff
+borg_packages:
+  - borgbackup
+  - cronie
+# crond on some distributions
+borg_cron_service: cron
+
